@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SR University | Student Feedback System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+<div class="brand">
+    <div class="logo">KVP</div>
+    <div>
+        <h1>KVP UNIVERSITY</h1>
+        <p>Warangal, Telangana | Student Academic Portal</p>
+    </div>
+</div>
+<div class="header-title">STUDENT FEEDBACK MANAGEMENT SYSTEM</div>
+<button id="logoutBtn" class="btn red hidden" onclick="logout()">LOGOUT</button>
+</header>
+
+<!-- LOGIN PAGE -->
+<section id="loginPage" class="login-wrapper">
+<div class="login">
+    <h2 id="loginHeading">Student Login</h2>
+    <p class="sub">KVP University Student Feedback Portal</p>
+
+    <label>Login Type</label>
+    <select id="loginRole" onchange="updateLoginLabels()">
+        <option value="student">Student Login</option>
+        <option value="staff">Staff Login</option>
+        <option value="admin">Admin Login</option>
+    </select>
+
+    <label id="userLabel">Student ID / Roll Number</label>
+    <input id="studentId" placeholder="Enter Student ID">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter Password">
+
+    <button class="btn full" onclick="login()">LOGIN TO PORTAL</button>
+
+    <p style="text-align:center;color:#888;font-size:11px;margin-top:18px;line-height:1.8">
+        Student: Enter any Student ID and password.<br>
+        Staff: name /name123<br>
+        Admin: admin / admin123
+    </p>
+</div>
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section id="dashboardPage" class="hidden">
+<main class="main">
+
+<div class="top">
+    <div>
+        <h2>Student Dashboard</h2>
+        <p>Welcome to KVP University Academic Feedback Portal</p>
+    </div>
+    <button class="btn red" onclick="logout()">LOGOUT</button>
+</div>
+
+<div class="card">
+    <h3>Student Profile</h3>
+    <div class="info-grid">
+        <div class="info"><small>Student ID</small><strong id="dId">---</strong></div>
+        <div class="info"><small>Student Name</small><strong>Koushik</strong></div>
+        <div class="info"><small>Institution</small><strong>KVP University</strong></div>
+        <div class="info"><small>Academic Year</small><strong>2026 - 2027</strong></div>
+        <div class="info"><small>Department</small><strong>Computer Science & Engineering</strong></div>
+        <div class="info"><small>Program</small><strong>B.Tech</strong></div>
+        <div class="info"><small>Year/Semester</small><strong>2/1</strong></div>
+        <div class="info"><small>Portal Access</small><strong>Active</strong></div>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat"><div class="number">06</div><p>Registered Courses</p></div>
+    <div class="stat"><div class="number" id="submittedCount">00</div><p>Feedback Submitted</p></div>
+    <div class="stat"><div class="number" id="pendingCount">06</div><p>Pending Feedback</p></div>
+    <div class="stat"><div class="number">100%</div><p>Portal Availability</p></div>
+</div>
+
+<div class="card" style="margin-top:22px">
+    <h3>Student Feedback Services</h3>
+    <div class="actions">
+        <div class="action" onclick="openFeedback()">
+            <div class="icon">📝</div>
+            <h3>Course & Faculty Feedback</h3>
+            <p>Submit ratings, comments and suggestions regarding your course and faculty.</p>
+        </div>
+
+        <div class="action" onclick="openStatus()">
+            <div class="icon">📊</div>
+            <h3>Feedback Status</h3>
+            <p>View your latest feedback submission and status.</p>
+        </div>
+
+        <div class="action" onclick="logout()">
+            <div class="icon">🔐</div>
+            <h3>Secure Logout</h3>
+            <p>End your student portal session.</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Important Notice</h3>
+    <p style="color:#666;font-size:14px;line-height:1.7">
+        Students are requested to provide honest and constructive academic feedback.
+        Feedback helps improve teaching quality and university performance.
+    </p>
+</div>
+</main>
+</section>
+
+<!-- FEEDBACK FORM -->
+<section id="feedbackPage" class="hidden">
+<main class="main">
+<div class="form">
+
+<div class="form-head">
+    <h2>Student Course & Faculty Feedback</h2>
+    <p>KVP University | Academic Quality Enhancement Cell</p>
+</div>
+
+<label>Course / Subject</label>
+<select id="course">
+    <option value="">-- Select Course --</option>
+    <option>Data Analysis and Visualization</option>
+    <option>Operating Systems and Computer Networks</option>
+    <option>Ai Assisted coding</option>
+    <option>Information management system</option>
+    <option>Web Technologies and mobile programming</option>
+    <option>Cloud Computing</option>
+</select>
+
+<label>Faculty</label>
+<select id="faculty">
+    <option value="">-- Select Faculty --</option>
+    <option>Dr.Vipin kumar </option>
+    <option>Dr. Chiranjeevi manike</option>
+    <option>Dr. Minakshimi Shaw</option>
+    <option>Dr. Khaja Mannanuddin</option>
+    <option>Dr. Rituparana Hazra</option>
+    <option>Dr. Kakade payal valmik</option>
+</select>
+
+<label>Overall Teaching Effectiveness Rating</label>
+<div class="rating">
+    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+    <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+</div>
+
+<label>Clarity of Explanation</label>
+<select id="contentRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>lecture interaction with students</label>
+<select id="lectureRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+
+<label>Faculty Communication</label>
+<select id="teachingRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>Doubt Clarification</label>
+<select id="doubtRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>Time Management</label>
+<select id="timeRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>Subject Knowledge</label>
+<select id="subjectRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>Explanation of Real-Time Examples</label>
+<select id="realTimeRating">
+    <option value="">-- Select Rating --</option>
+    <option>Excellent</option>
+    <option>Very Good</option>
+    <option>Good</option>
+    <option>Average</option>
+    <option>Needs Improvement</option>
+</select>
+<label>Comments / Suggestions</label>
+<textarea id="comments" placeholder="Enter your feedback..."></textarea>
+
+<div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+    <button class="btn" onclick="submitFeedback()">SUBMIT FEEDBACK</button>
+    <button class="btn gray" onclick="backDashboard()">CANCEL</button>
+</div>
+
+</div>
+</main>
+</section>
+
+<!-- SUCCESS PAGE -->
+<section id="successPage" class="hidden">
+<div class="success">
+    <div class="success-icon">✓</div>
+    <h2>Feedback Submitted Successfully</h2>
+    <p>
+        Thank you for your valuable feedback.
+        Your response has been recorded successfully.
+    </p>
+    <button class="btn" onclick="openStatus()">VIEW FEEDBACK STATUS</button>
+    <button class="btn gray" onclick="backDashboard()">DASHBOARD</button>
+</div>
+</section>
+
+<!-- FEEDBACK STATUS -->
+<section id="statusPage" class="hidden">
+<main class="main">
+<div class="status">
+
+<h2 style="color:#073b74">Feedback Submission Status</h2>
+<p style="color:#777;font-size:13px;margin-top:5px">
+    SR University | Student Academic Feedback Portal
+</p>
+
+<div id="badge" class="badge">NO FEEDBACK SUBMITTED</div>
+
+<div class="table-wrap">
+<table class="table">
+    <tr><td>Student ID</td><td id="sId">---</td></tr>
+    <tr><td>Course / Subject</td><td id="sCourse">---</td></tr>
+    <tr><td>Faculty</td><td id="sFaculty">---</td></tr>
+    <tr><td>Teaching Rating</td><td id="sRating">---</td></tr>
+    <tr><td>Course Content</td><td id="sContent">---</td></tr>
+    <tr><td>Communication</td><td id="sTeaching">---</td></tr>
+    <tr><td>Comments</td><td id="sComments">---</td></tr>
+    <tr><td>Submission Date</td><td id="sDate">---</td></tr>
+    <tr><td>Current Status</td><td><strong style="color:#15803d">Submitted</strong></td></tr>
+</table>
+</div>
+
+<div style="margin-top:25px">
+    <button class="btn" onclick="backDashboard()">DASHBOARD</button>
+    <button class="btn red" onclick="logout()">LOGOUT</button>
+</div>
+
+</div>
+</main>
+</section>
+
+<!-- STAFF DASHBOARD -->
+<section id="staffPage" class="hidden">
+<main class="main">
+
+<div class="top">
+    <div>
+        <h2>Staff Dashboard</h2>
+        <p id="staffWelcome">Welcome, Staff Member</p>
+    </div>
+    <button class="btn red" onclick="logout()">LOGOUT</button>
+</div>
+
+<div class="card">
+    <h3>Faculty Information</h3>
+    <div class="info-grid">
+        <div class="info">
+            <small>Staff Name</small>
+            <strong id="staffName">---</strong>
+        </div>
+        <div class="info">
+            <small>Assigned Faculty</small>
+            <strong id="staffAssignedFaculty">---</strong>
+        </div>
+        <div class="info">
+            <small>Portal Role</small>
+            <strong>Faculty Member</strong>
+        </div>
+        <div class="info">
+            <small>Access Status</small>
+            <strong>Active</strong>
+        </div>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <div class="number" id="staffTotal">0</div>
+        <p>Total Feedback</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="staffStudents">0</div>
+        <p>Students Responded</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="staffAverage">—</div>
+        <p>Average Rating</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="staffCourses">0</div>
+        <p>Courses Reviewed</p>
+    </div>
+</div>
+
+<div class="card" style="margin-top:22px">
+    <h3>My Student Feedback Records</h3>
+
+    <p style="font-size:14px;color:#475569;margin-bottom:12px">
+        Only feedback submitted for your faculty account is displayed here.
+    </p>
+
+    <label>Filter by Your Course</label>
+    <select id="staffCourseFilter" onchange="renderStaffFeedback()">
+        <option value="">All Your Courses</option>
+    </select>
+
+    <div class="table-wrap" style="margin-top:20px">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Faculty</th>
+                    <th>Rating</th>
+                    <th>Course Content</th>
+                    <th>Teaching</th>
+                    <th>Comments</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="staffFeedbackRows"></tbody>
+        </table>
+    </div>
+
+    <p class="role-note">
+        Student names and IDs are not displayed in this staff feedback table.
+        Students Responded counts unique student IDs.
+    </p>
+</div>
+</main>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="adminPage" class="hidden">
+<main class="main">
+
+<div class="top">
+    <div>
+        <h2>Administrator Dashboard</h2>
+        <p>Monitor all student feedback activity.</p>
+    </div>
+    <button class="btn red" onclick="logout()">LOGOUT</button>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <div class="number" id="adminTotal">0</div>
+        <p>Total Feedback</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="adminCourses">0</div>
+        <p>Courses Reviewed</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="adminFaculty">0</div>
+        <p>Faculty Reviewed</p>
+    </div>
+    <div class="stat">
+        <div class="number" id="adminAverage">—</div>
+        <p>Average Rating</p>
+    </div>
+</div>
+
+<div class="card" style="margin-top:22px">
+    <h3>Feedback Management</h3>
+    <p style="color:#666;font-size:14px;margin-bottom:18px">
+        Admin can view all feedback submitted by students for every faculty member.
+    </p>
+
+    <button class="btn" onclick="showAdminFeedback()">VIEW ALL FEEDBACK</button>
+
+    <div id="adminFeedbackArea" class="hidden" style="margin-top:22px">
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Faculty</th>
+                        <th>Rating</th>
+                        <th>Course Content</th>
+                        <th>Teaching</th>
+                        <th>Comments</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="adminFeedbackRows"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Portal Information</h3>
+    <p style="color:#666;font-size:14px;line-height:1.7">
+        This is a browser-based demonstration. A real university deployment
+        requires secure backend authentication and server-side access controls.
+    </p>
+</div>
+
+</main>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<strong>KVP UNIVERSITY</strong><br>
+Student Feedback Management System
+<br><br>
+© 2026 KVP University. All Rights Reserved.
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
